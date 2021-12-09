@@ -16,22 +16,21 @@ namespace _0_Game.Scripts.Generation
         [SerializeField] private Spawner spawner;
         [SerializeField] private Transform startPosition;
         [SerializeField] private GeneratorConfig config;
-        
-        private IGenerationStrategy strategy = new RandomStrategy();
+
+        private IGenerationStrategy strategy;
         private float width;
 
         private Tile lastTile;
-
         private Vector3 lastPosition;
 
         private void Start()
         {
-            Init();
+            InitStrategy();
             lastPosition = startPosition.position - (Vector3.forward + Vector3.right)/2;   
             Generate();
         }
 
-        private void Init()
+        private void InitStrategy()
         {
             var min = config.minLength;
             var max = config.maxLength;
