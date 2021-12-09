@@ -8,14 +8,14 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
-  - 
+  - SafeSpace
+  - Block
+  - Gem
+  - ExitTrigger
+  - SightEnterTrigger
   - 
   - 
   - 

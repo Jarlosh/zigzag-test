@@ -9,9 +9,9 @@ namespace Scripts
         [SerializeField] private float speed = 1;
         [SerializeField] private bool isMovingX;
 
-        private bool isMoving = true;
         private Vector3 moveDirection;
-        
+
+        public bool IsMoving { get; set; }
         public bool IsMovingX
         {
             get => isMovingX;
@@ -36,7 +36,7 @@ namespace Scripts
 
         private void Update()
         {
-            if (!isMoving)
+            if (!IsMoving)
                 return;
 
             CheckInput();
