@@ -1,5 +1,6 @@
 ﻿using System;
 using _0_Game.Scripts;
+using _0_Game.Scripts.Management;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -31,6 +32,7 @@ namespace Scripts
 
         private void OnCollectableEnter(Collectable collectable)
         {
+            GameState.Instance.Score++;
             collectable.OnCollected();
         }
 
