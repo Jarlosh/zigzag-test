@@ -23,7 +23,7 @@ namespace _0_Game.Scripts.Generation
             var addedRot = Quaternion.AngleAxis(Random.Range(0f, 360f), Vector3.up);
             var rot = collectablePrefab.transform.rotation * addedRot;
             var go = Instantiate(collectablePrefab, position, rot);
-            go.transform.parent = tile.transform;
+            // go.transform.parent = tile.transform;
         }
     }
 }
