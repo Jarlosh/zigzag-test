@@ -10,7 +10,7 @@ namespace _0_Game.Scripts.Generation
         [SerializeField] private Transform startPosition;
         
         // [SerializeField] private Sight sight;
-        private IGenerationStrategy strategy = new TestStrategy();
+        private IGenerationStrategy strategy = new RandomStrategy();
         private Tile lastTile;
         private Vector3 lastPosition;
 
