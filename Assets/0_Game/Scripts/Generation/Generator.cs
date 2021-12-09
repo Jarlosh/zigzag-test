@@ -26,7 +26,7 @@ namespace _0_Game.Scripts.Generation
         private void Start()
         {
             InitStrategy();
-            lastPosition = startPosition.position - (Vector3.forward + Vector3.right)/2;   
+            lastPosition = startPosition.position;// - (Vector3.forward + Vector3.right)*(width/2);   
             Generate();
         }
 
@@ -66,10 +66,17 @@ namespace _0_Game.Scripts.Generation
             
             var primaryStep = looksRight ? Vector3.right : Vector3.forward;
             var secondaryStep = looksRight ? Vector3.forward : Vector3.right;
-
-            lastPosition -= secondaryStep * ((float)(width - 1) / 2);
+            
             if(lastTile != null)
-                lastPosition += primaryStep * ((float)(width + 1) / 2);
+            {
+                lastPosition -= secondaryStep * ((width - 1) / 2);
+                lastPosition += primaryStep * ((width + 1) / 2);
+            }
+            else
+            {
+                lastPosition -= secondaryStep * (width / 2);
+                lastPosition += primaryStep / 2;
+            }
             for (int i = 0; i < blockInfo.length; i++)
             {
                 if(i != 0)

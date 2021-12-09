@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfa77eabccdd4bff960c1293edce3c86, type: 3}
   m_Name: GeneratorConfig
   m_EditorClassIdentifier: 
-  Type: 0
-  Width: 1
+  Type: 1
+  Width: 3
   minLength: 5
   maxLength: 5
