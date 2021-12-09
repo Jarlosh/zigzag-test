@@ -13,7 +13,7 @@ TagManager:
   - UI
   - SafeSpace
   - Block
-  - Gem
+  - Collectable
   - ExitTrigger
   - SightEnterTrigger
   - 

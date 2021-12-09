@@ -1,4 +1,5 @@
 ﻿using System;
+using _0_Game.Scripts;
 using _0_Game.Scripts.Tools;
 using UnityEngine;
 
@@ -7,8 +8,10 @@ namespace Scripts
     public class PlayerCollisions : MonoBehaviour
     {
         [SerializeField] private LayerMask safeLayer;
+        [SerializeField] private LayerMask collectableLayer;
         
         public event Action OnNoSafeSpaceLeftEvent;
+        public event Action<Collectable> OnCollectableEnterEvent;
 
         private int stayingSafeSpacesCount;
         
@@ -16,6 +19,11 @@ namespace Scripts
         {
             if (IsSafeSpace(other))
                 stayingSafeSpacesCount++;
+            
+            if(HasLayer(other, collectableLayer))
+                if(other.gameObject.TryGetComponent<Collectable>(out var collectable))
+                    OnCollectableEnterEvent?.Invoke(collectable);
+                
         }
 
         private void OnTriggerExit(Collider other)
@@ -28,9 +36,14 @@ namespace Scripts
             }
         }
 
+        private bool HasLayer(Collider other, LayerMask mask)
+        {
+            return (mask.Contains(other.gameObject.layer));
+        }
+        
         private bool IsSafeSpace(Collider other)
         {
-            return (safeLayer.Contains(other.gameObject.layer));
+            return HasLayer(other, safeLayer);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using _0_Game.Scripts;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -24,9 +25,15 @@ namespace Scripts
         private void Start()
         {
             collisionManager.OnNoSafeSpaceLeftEvent += OnNoSafeSpaceLeftLeft;
+            collisionManager.OnCollectableEnterEvent += OnCollectableEnter;
             movement.IsMoving = true;
         }
-        
+
+        private void OnCollectableEnter(Collectable collectable)
+        {
+            collectable.OnCollected();
+        }
+
         private void OnDead()
         {
             movement.IsMoving = false;
