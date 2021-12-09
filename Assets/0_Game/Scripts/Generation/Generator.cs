@@ -77,11 +77,18 @@ namespace _0_Game.Scripts.Generation
                 lastPosition -= secondaryStep * (width / 2);
                 lastPosition += primaryStep / 2;
             }
+
+            var sideOffset = secondaryStep * (width - 1) / 2;
             for (int i = 0; i < blockInfo.length; i++)
             {
                 if(i != 0)
                     lastPosition += primaryStep;
-                lastTile = spawner.SetTile(lastPosition, width, looksRight);
+                
+                for (int j = 0; j < width; j++)
+                {
+                    var position = lastPosition - sideOffset + j * secondaryStep;
+                    lastTile = spawner.SetTile(position, 1, looksRight);
+                }
                 if (blockInfo.collectableIndex == i)
                     spawner.AddCollectable(lastTile, i);
             }

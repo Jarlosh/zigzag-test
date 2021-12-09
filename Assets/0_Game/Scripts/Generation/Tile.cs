@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using _0_Game.Scripts.Tools;
 using UnityEngine;
 
@@ -14,30 +15,27 @@ namespace _0_Game.Scripts.Generation
             set => transform.position = value;
         }
 
-        public event Action<GameObject> OnSightTriggerEnter;
-        public event Action<GameObject> OnSightTriggerExit;
-        public event Action<Tile> OnDestroyEvent;
-
         public void SetWidth(float width, bool lookRight)
         {
             transform.localScale = lookRight ? new Vector3(1, 1, width) : new Vector3(width, 1, 1);
         }
-        
-        private void OnTriggerEnter(Collider other)
-        {
-            if(sightTriggerMask.Contains(other.gameObject.layer))
-                OnSightTriggerEnter?.Invoke(other.gameObject);
-        }
+
 
         private void OnTriggerExit(Collider other)
         {
-            if(sightTriggerMask.Contains(other.gameObject.layer))
-                OnSightTriggerExit?.Invoke(other.gameObject);
+            if (sightTriggerMask.Contains(other.gameObject.layer))
+                StartCoroutine(Fall());
         }
 
-        private void OnDestroy()
+        // too lazy to import dotween
+        private IEnumerator Fall()
         {
-            OnDestroyEvent?.Invoke(this);
+            while (transform.position.y > -5)
+            {
+                transform.position += Vector3.down * (5 * Time.deltaTime);
+                yield return new WaitForEndOfFrame();
+            }
+            Destroy(gameObject);
         }
 
         public bool IsInSight()
