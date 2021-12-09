@@ -13,11 +13,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7444096827112963735, guid: 6695b969b82bd8448b837ad68550c0f1, type: 3}
       propertyPath: m_LocalScale.x
-      value: 3
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 7444096827112963735, guid: 6695b969b82bd8448b837ad68550c0f1, type: 3}
       propertyPath: m_LocalScale.z
-      value: 3
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 7444096827112963735, guid: 6695b969b82bd8448b837ad68550c0f1, type: 3}
       propertyPath: m_LocalPosition.x
@@ -61,7 +61,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7444096827112963739, guid: 6695b969b82bd8448b837ad68550c0f1, type: 3}
       propertyPath: m_Name
-      value: StartTile
+      value: StartTile Variant
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6695b969b82bd8448b837ad68550c0f1, type: 3}
