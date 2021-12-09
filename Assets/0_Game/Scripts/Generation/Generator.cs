@@ -1,24 +1,46 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace _0_Game.Scripts.Generation
 {
+    public enum GenerationType
+    {
+        Random, Ordered
+    }
+
+
     public class Generator : MonoBehaviour
     {
         [SerializeField] private Spawner spawner;
         [SerializeField] private Transform startPosition;
-        [SerializeField] private float width;
-
-        // [SerializeField] private Sight sight;
+        [SerializeField] private GeneratorConfig config;
+        
         private IGenerationStrategy strategy = new RandomStrategy();
+        private float width;
+
         private Tile lastTile;
+
         private Vector3 lastPosition;
 
         private void Start()
         {
+            Init();
             lastPosition = startPosition.position - (Vector3.forward + Vector3.right)/2;   
             Generate();
+        }
+
+        private void Init()
+        {
+            var min = config.minLength;
+            var max = config.maxLength;
+            width = config.Width;
+            strategy = config.Type switch
+            {
+                GenerationType.Random => new RandomStrategy(min, max),
+                GenerationType.Ordered => new OrderedStrategy(min, max)
+            };
         }
 
         public void Generate()

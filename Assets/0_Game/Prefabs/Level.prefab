@@ -79,7 +79,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawner: {fileID: 1172642164532148236}
   startPosition: {fileID: 148898026391052937}
-  width: 1
+  config: {fileID: 11400000, guid: 642b3b70e046cf54d8a7e3c553fd7451, type: 2}
 --- !u!114 &1172642164532148236
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -5,5 +5,12 @@
         public int length;
         public bool looksRight;
         public int collectableIndex;
+
+        public BlockInfo(int length, int collectableIndex, bool looksRight)
+        {
+            this.length = length;
+            this.collectableIndex = collectableIndex;
+            this.looksRight = looksRight;
+        }
     }
 }

@@ -4,13 +4,8 @@ namespace _0_Game.Scripts.Generation
 {
     public class RandomStrategy : BaseStrategy
     {
-        private int maxLength = 1;
-        
-        public RandomStrategy(int maxLength = 5)
-        {
-            this.maxLength = maxLength;
-        }
-        
+        public RandomStrategy(int min, int max) : base(min, max) { }
+
         protected override BlockInfo MakeFirstInfo()
         {
             var lookRight = Random.value > 0.5f;
@@ -24,7 +19,7 @@ namespace _0_Game.Scripts.Generation
 
         private BlockInfo MakeRandom(bool looksRight)
         {
-            var len = Random.Range(1, maxLength);
+            var len = PickLength();
             var colIndex = Random.Range(0, len - 1);
             return new BlockInfo()
             {
