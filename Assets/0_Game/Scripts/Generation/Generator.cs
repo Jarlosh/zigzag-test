@@ -8,7 +8,8 @@ namespace _0_Game.Scripts.Generation
     {
         [SerializeField] private Spawner spawner;
         [SerializeField] private Transform startPosition;
-        
+        [SerializeField] private float width;
+
         // [SerializeField] private Sight sight;
         private IGenerationStrategy strategy = new RandomStrategy();
         private Tile lastTile;
@@ -16,7 +17,7 @@ namespace _0_Game.Scripts.Generation
 
         private void Start()
         {
-            lastPosition = startPosition.position;   
+            lastPosition = startPosition.position - (Vector3.forward + Vector3.right)/2;   
             Generate();
         }
 
@@ -41,12 +42,18 @@ namespace _0_Game.Scripts.Generation
         {
             var blockInfo = strategy.GetNextBlockInfo();
             var looksRight = blockInfo.looksRight;
-            var step = looksRight ? Vector3.right : Vector3.forward;
             
+            var primaryStep = looksRight ? Vector3.right : Vector3.forward;
+            var secondaryStep = looksRight ? Vector3.forward : Vector3.right;
+
+            lastPosition -= secondaryStep * ((float)(width - 1) / 2);
+            if(lastTile != null)
+                lastPosition += primaryStep * ((float)(width + 1) / 2);
             for (int i = 0; i < blockInfo.length; i++)
             {
-                lastPosition += step; 
-                lastTile = spawner.SetTile(lastPosition);
+                if(i != 0)
+                    lastPosition += primaryStep;
+                lastTile = spawner.SetTile(lastPosition, width, looksRight);
                 if (blockInfo.collectableIndex == i)
                     spawner.AddCollectable(lastTile, i);
             }

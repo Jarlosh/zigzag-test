@@ -9,10 +9,12 @@ namespace _0_Game.Scripts.Generation
         [SerializeField] private GameObject collectablePrefab;
         [SerializeField] private Transform tileContainer;
         
-        public Tile SetTile(Vector3 position)
+        public Tile SetTile(Vector3 position, float width, bool lookRight)
         {
             var go = Instantiate(tilePrefab, position, Quaternion.identity, tileContainer);
-            return go.GetComponent<Tile>();
+            var tile = go.GetComponent<Tile>();
+            tile.SetWidth(width, lookRight);
+            return tile;
         }
 
         public void AddCollectable(Tile tile, int i)
@@ -20,7 +22,8 @@ namespace _0_Game.Scripts.Generation
             var position = tile.Position + Vector3.up;
             var addedRot = Quaternion.AngleAxis(Random.Range(0f, 360f), Vector3.up);
             var rot = collectablePrefab.transform.rotation * addedRot;
-            Instantiate(collectablePrefab, position, rot, tileContainer);
+            var go = Instantiate(collectablePrefab, position, rot);
+            go.transform.parent = tile.transform;
         }
     }
 }

@@ -7,7 +7,6 @@ namespace _0_Game.Scripts.Generation
     public class Tile : MonoBehaviour
     {
         [SerializeField] private LayerMask sightTriggerMask;
-        public int Width { get; private set; }
         
         public Vector3 Position
         {
@@ -19,6 +18,11 @@ namespace _0_Game.Scripts.Generation
         public event Action<GameObject> OnSightTriggerExit;
         public event Action<Tile> OnDestroyEvent;
 
+        public void SetWidth(float width, bool lookRight)
+        {
+            transform.localScale = lookRight ? new Vector3(1, 1, width) : new Vector3(width, 1, 1);
+        }
+        
         private void OnTriggerEnter(Collider other)
         {
             if(sightTriggerMask.Contains(other.gameObject.layer))
