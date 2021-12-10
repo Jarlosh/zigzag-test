@@ -1,22 +1,33 @@
 ﻿using System;
 using _0_Game.Scripts.Management;
+using _0_Game.Scripts.Zen;
 using UnityEngine;
 using UnityEngine.Serialization;
+using Zenject;
 
 namespace Scripts
 {
-    public class PlayerMovement : MonoBehaviour
+    public class PlayerMovement : IInitializable, IDisposable, ITickable
     {
-        [SerializeField] private float speed = 1;
-        [SerializeField] private bool isMovingX;
+        [Serializable]
+        public class Settings
+        {
+            public float speed;
+            public bool isMovingXOnStart;
+        }
 
+        private SignalBus signalBus;
+        private PlayerData player;
+        
+        private float speed = 1;
+        private bool isMovingX;
         private Vector3 moveDirection;
 
         public bool IsMoving { get; private set; } = false;
         public bool IsMovingX 
         {
             get => isMovingX;
-            set
+            private set
             {
                 if (isMovingX == value)
                     return;
@@ -25,28 +36,33 @@ namespace Scripts
             }
         }
 
+        [Inject]
+        private void Construct(SignalBus signalBus, Settings settings, PlayerData playerData)
+        {
+            this.signalBus = signalBus;
+            this.player = playerData;
+            speed = settings.speed;
+            isMovingX = settings.isMovingXOnStart;
+            UpdateDirection();
+        }
+
+        public void Initialize()
+        {
+            signalBus.Subscribe<GameOverSignal>(OnGameover);
+            signalBus.Subscribe<GameStartSignal>(OnGameStarted);
+        }
+
+        public void Dispose()
+        {
+            signalBus.Unsubscribe<GameOverSignal>(OnGameover);
+            signalBus.Unsubscribe<GameStartSignal>(OnGameStarted);
+        }
+        
         private void UpdateDirection()
         {
             moveDirection = IsMovingX ? Vector3.right : Vector3.forward;
         }
-
-        private void Start()
-        {
-            var gm = GameManager.Instance;
-            gm.OnGameoverEvent += OnGameover;
-            gm.OnGameStartedEvent += OnGameStarted;
-            UpdateDirection();
-        }
         
-        private void OnDestroy()
-        {
-            var gm = GameManager.Instance;
-            if (gm == null)
-                return;
-            gm.OnGameoverEvent -= OnGameover;
-            gm.OnGameStartedEvent -= OnGameStarted;
-        }
-
         private void OnGameStarted()
         {
             IsMoving = true;
@@ -57,7 +73,7 @@ namespace Scripts
             IsMoving = false;
         }
 
-        private void Update()
+        public void Tick()
         {
             if (!IsMoving)
                 return;
@@ -65,7 +81,7 @@ namespace Scripts
             CheckInput();
             Move();
         }
-
+        
         private void CheckInput()
         {
             if(IsSwitchPressed())
@@ -80,7 +96,7 @@ namespace Scripts
         private void Move()
         {
             var moveDelta = moveDirection * (speed * Time.fixedDeltaTime);
-            transform.position += moveDelta;
+            player.movedTransform.position += moveDelta;
         }
     }
 }
