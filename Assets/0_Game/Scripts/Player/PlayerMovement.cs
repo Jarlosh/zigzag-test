@@ -75,7 +75,7 @@ namespace Scripts
                 return;
             if (GameState.Instance.IsFinished)
                 GameManager.Instance.Restart();
-            else IsMoving = true;
+            else GameManager.Instance.StartGame();
         }
 
         private void CheckInput()
