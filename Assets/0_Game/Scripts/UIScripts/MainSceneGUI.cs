@@ -1,29 +1,36 @@
 ﻿using System;
+using _0_Game.Scripts.Zen;
 using UnityEngine;
+using Zenject;
 
 namespace _0_Game.Scripts.Management.Score
 {
-    public class MainSceneGUI : MonoBehaviour
+    public class MainSceneGUI : MonoBehaviour, IInitializable, IDisposable
     {
+        private SignalBus signalBus;
         [SerializeField] private GameObject gameplayGui;
         [SerializeField] private GameObject startInfoWindow;
         [SerializeField] private GameObject gameoverInfoWindow;
 
-        private void Start()
+        [Inject]
+        private void Construct(SignalBus signalBus)
         {
-            startInfoWindow.SetActive(true);
-            GameManager.Instance.OnGameStartedEvent += OnGameStart;
-            GameManager.Instance.OnGameoverEvent += OnGameOver;
+            this.signalBus = signalBus;
         }
         
-        private void OnDestroy()
+        public void Initialize()
         {
-            if (GameManager.Instance == null)
-                return;
-            GameManager.Instance.OnGameStartedEvent -= OnGameStart;
-            GameManager.Instance.OnGameoverEvent -= OnGameOver;
+            signalBus.Subscribe<GameOverSignal>(OnGameOver);
+            signalBus.Subscribe<GameStartSignal>(OnGameStart);
+            startInfoWindow.SetActive(true);
         }
 
+        public void Dispose()
+        {
+            signalBus.Unsubscribe<GameOverSignal>(OnGameOver);
+            signalBus.Unsubscribe<GameStartSignal>(OnGameStart);
+        }
+        
         private void OnGameOver()
         {
             gameoverInfoWindow.SetActive(true);

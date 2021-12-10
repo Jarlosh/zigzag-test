@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1592218412715705323}
   - component: {fileID: 8966245346379771706}
+  - component: {fileID: 6495064269086281745}
   m_Layer: 5
   m_Name: GameplayWindow
   m_TagString: Untagged
@@ -54,6 +55,24 @@ MonoBehaviour:
   gameplayGui: {fileID: 7360125901467433877}
   startInfoWindow: {fileID: 1998564026794065564}
   gameoverInfoWindow: {fileID: 8964162631270640878}
+--- !u!114 &6495064269086281745
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 108603697577713506}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0166d8ff8d905b048b2448179e1f5d11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _components:
+  - {fileID: 8966245346379771706}
+  _identifier: 
+  _useSceneContext: 0
+  _context: {fileID: 0}
+  _bindType: 1
 --- !u!1 &1998564026794065564
 GameObject:
   m_ObjectHideFlags: 0
