@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: GeneratorConfig
   m_EditorClassIdentifier: 
   Type: 1
-  Width: 2
+  Width: 1
   minLength: 5
   maxLength: 5

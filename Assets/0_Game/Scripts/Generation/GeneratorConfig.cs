@@ -6,7 +6,7 @@ namespace _0_Game.Scripts.Generation
     public class GeneratorConfig : ScriptableObject
     {
         public GenerationType Type;
-        [Range(0.25f,10)] public float Width;
+        [Range(0.25f,10)] public int Width;
         public int minLength;
         public int maxLength;
     }

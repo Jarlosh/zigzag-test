@@ -18,7 +18,7 @@ namespace _0_Game.Scripts.Generation
         [SerializeField] private GeneratorConfig config;
 
         private IGenerationStrategy strategy;
-        private float width;
+        private int width;
 
         private Tile lastTile;
         private Vector3 lastPosition;
@@ -69,16 +69,16 @@ namespace _0_Game.Scripts.Generation
             
             if(lastTile != null)
             {
-                lastPosition -= secondaryStep * ((width - 1) / 2);
-                lastPosition += primaryStep * ((width + 1) / 2);
+                lastPosition -= secondaryStep * (((float)width - 1) / 2);
+                lastPosition += primaryStep * (((float)width + 1) / 2);
             }
             else
             {
-                lastPosition -= secondaryStep * (width / 2);
+                lastPosition -= secondaryStep * ((float)width / 2);
                 lastPosition += primaryStep / 2;
             }
 
-            var sideOffset = secondaryStep * (width - 1) / 2;
+            var sideOffset = secondaryStep * ((float)width - 1) / 2;
             for (int i = 0; i < blockInfo.length; i++)
             {
                 if(i != 0)
