@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 7698815521209526310}
   - component: {fileID: 7698815521209526304}
   - component: {fileID: 7698815521209526305}
-  - component: {fileID: 7698815521209526307}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -135,19 +134,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &7698815521209526307
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7698815521209526311}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d4b45a06d014a968aabb25a4078fb6e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  label: {fileID: 7698815521209526305}
 --- !u!1 &7698815521535320333
 GameObject:
   m_ObjectHideFlags: 0
@@ -159,6 +145,8 @@ GameObject:
   - component: {fileID: 7698815521535320332}
   - component: {fileID: 7698815521535320334}
   - component: {fileID: 7698815521535320335}
+  - component: {fileID: 5819740341776710508}
+  - component: {fileID: 8109500251752535039}
   m_Layer: 5
   m_Name: Score panel
   m_TagString: Untagged
@@ -224,3 +212,34 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &5819740341776710508
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7698815521535320333}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d4b45a06d014a968aabb25a4078fb6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  label: {fileID: 7698815521209526305}
+--- !u!114 &8109500251752535039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7698815521535320333}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0166d8ff8d905b048b2448179e1f5d11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _components:
+  - {fileID: 5819740341776710508}
+  _identifier: 
+  _useSceneContext: 0
+  _context: {fileID: 0}
+  _bindType: 1
