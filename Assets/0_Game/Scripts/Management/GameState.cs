@@ -6,8 +6,9 @@ namespace _0_Game.Scripts.Management
     {
         public static GameState Instance => GameManager.Instance.State;
         
+        public bool IsStarted { get; set; } = false;
+        public bool IsFinished { get; set; } = false;
         private int score;
-
 
         public int Score
         {
@@ -18,14 +19,7 @@ namespace _0_Game.Scripts.Management
                 OnScoreSetEvent?.Invoke(score);
             }
         }
-        
-        public bool IsStarted { get; set; }
 
         public event Action<int> OnScoreSetEvent;
-
-        public GameState()
-        {
-            
-        }
     }
 }

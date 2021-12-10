@@ -10,24 +10,17 @@ namespace Scripts
     {
         [SerializeField] private PlayerCollisions collisionManager;
         [SerializeField] private PlayerMovement movement;
-        
-        private bool isAlive;
-        public bool IsAlive
-        {
-            get => isAlive;
-            private set
-            {
-                isAlive = value;
-                if(!isAlive)
-                    OnDead();
-            }
-        }
-        
+
         private void Start()
         {
             collisionManager.OnNoSafeSpaceLeftEvent += OnNoSafeSpaceLeftLeft;
             collisionManager.OnCollectableEnterEvent += OnCollectableEnter;
-            movement.IsMoving = true;
+        }
+
+        private void OnDestroy()
+        {
+            collisionManager.OnNoSafeSpaceLeftEvent -= OnNoSafeSpaceLeftLeft;
+            collisionManager.OnCollectableEnterEvent -= OnCollectableEnter;
         }
 
         private void OnCollectableEnter(Collectable collectable)
@@ -35,15 +28,10 @@ namespace Scripts
             GameState.Instance.Score++;
             collectable.OnCollected();
         }
-
-        private void OnDead()
-        {
-            movement.IsMoving = false;
-        }
-
+        
         private void OnNoSafeSpaceLeftLeft()
         {
-           IsAlive = false;
+            GameManager.Instance.Gameover();
         }
     }
 }

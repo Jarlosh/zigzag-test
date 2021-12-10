@@ -1,4 +1,5 @@
 ﻿using System;
+using _0_Game.Scripts.Management;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -11,8 +12,8 @@ namespace Scripts
 
         private Vector3 moveDirection;
 
-        public bool IsMoving { get; set; }
-        public bool IsMovingX
+        public bool IsMoving { get; private set; } = false;
+        public bool IsMovingX 
         {
             get => isMovingX;
             set
@@ -31,16 +32,50 @@ namespace Scripts
 
         private void Start()
         {
+            var gm = GameManager.Instance;
+            gm.OnGameoverEvent += OnGameover;
+            gm.OnGameStartedEvent += OnGameStarted;
             UpdateDirection();
+        }
+        
+        private void OnDestroy()
+        {
+            var gm = GameManager.Instance;
+            if (gm == null)
+                return;
+            gm.OnGameoverEvent -= OnGameover;
+            gm.OnGameStartedEvent -= OnGameStarted;
+        }
+
+        private void OnGameStarted()
+        {
+            IsMoving = true;
+        }
+        
+        private void OnGameover()
+        {
+            IsMoving = false;
         }
 
         private void Update()
         {
             if (!IsMoving)
+            {
+                CheckForStart();
                 return;
+            }
 
             CheckInput();
             Move();
+        }
+
+        private void CheckForStart()
+        {
+            if (!Input.GetKeyDown(KeyCode.Space))
+                return;
+            if (GameState.Instance.IsFinished)
+                GameManager.Instance.Restart();
+            else IsMoving = true;
         }
 
         private void CheckInput()
