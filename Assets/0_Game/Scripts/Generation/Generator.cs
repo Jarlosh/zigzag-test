@@ -1,45 +1,45 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 using Random = UnityEngine.Random;
 
 namespace _0_Game.Scripts.Generation
 {
-    public enum GenerationType
+    public enum GenerationStrategy
     {
         Random, Ordered
     }
 
-
-    public class Generator : MonoBehaviour
+    public class Generator : IInitializable, ITickable
     {
-        [SerializeField] private Spawner spawner;
-        [SerializeField] private Transform startPosition;
-        [SerializeField] private GeneratorConfig config;
-
+        private GeneratorConfig config;
+        private LevelData levelData;
         private IGenerationStrategy strategy;
-        private int width;
-
+        
+        private Tile.Factory tilePool;
+        private Collectable.Factory collectablePool;
+        
         private Tile lastTile;
         private Vector3 lastPosition;
 
-        private void Start()
+        [Inject]
+        private void Construct(
+            GeneratorConfig config, LevelData levelData, 
+            IGenerationStrategy strategy, 
+            Tile.Factory tilePool, Collectable.Factory collectablePool)
         {
-            InitStrategy();
-            lastPosition = startPosition.position;// - (Vector3.forward + Vector3.right)*(width/2);   
-            Generate();
+            this.config = config;
+            this.levelData = levelData;
+            this.strategy = strategy;
+            this.tilePool = tilePool;
+            this.collectablePool = collectablePool;
         }
-
-        private void InitStrategy()
+        
+        public void Initialize()
         {
-            var min = config.minLength;
-            var max = config.maxLength;
-            width = config.Width;
-            strategy = config.Type switch
-            {
-                GenerationType.Random => new RandomStrategy(min, max),
-                GenerationType.Ordered => new OrderedStrategy(min, max)
-            };
+            lastPosition = levelData.StartPosition;// - (Vector3.forward + Vector3.right)*(width/2);   
+            Generate();
         }
 
         public void Generate()
@@ -47,13 +47,13 @@ namespace _0_Game.Scripts.Generation
             do AddBlock();
             while (NeedMoreBlocks());
         }
-
-        private void Update()
+        
+        public void Tick()
         {
             if(NeedMoreBlocks())
                 AddBlock();
         }
-
+        
         private bool NeedMoreBlocks()
         {
             return lastTile.IsInSight();
@@ -63,6 +63,7 @@ namespace _0_Game.Scripts.Generation
         {
             var blockInfo = strategy.GetNextBlockInfo();
             var looksRight = blockInfo.looksRight;
+            var width = config.Width;
             
             var primaryStep = looksRight ? Vector3.right : Vector3.forward;
             var secondaryStep = looksRight ? Vector3.forward : Vector3.right;
@@ -87,11 +88,21 @@ namespace _0_Game.Scripts.Generation
                 for (int j = 0; j < width; j++)
                 {
                     var position = lastPosition - sideOffset + j * secondaryStep;
-                    lastTile = spawner.SetTile(position, 1, looksRight);
+                    lastTile = SpawnTile(position, 1, looksRight);
                 }
                 if (blockInfo.collectableIndex == i)
-                    spawner.AddCollectable(lastTile, i);
+                    SpawnCollectable(lastTile);
             }
+        }
+
+        private Collectable SpawnCollectable(Tile parent)
+        {
+            return collectablePool.Create(parent);
+        }
+
+        private Tile SpawnTile(Vector3 position, int width, bool looksRight)
+        {
+            return tilePool.Create(position, width, looksRight);
         }
     }
 }

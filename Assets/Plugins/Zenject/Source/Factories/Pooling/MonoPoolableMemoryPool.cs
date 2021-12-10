@@ -76,10 +76,10 @@ namespace Zenject
             }
         }
 
-        protected override void Reinitialize(TParam1 p1, TValue item)
+        protected override void Reinitialize(TParam1 ownerTile, TValue collectable)
         {
-            item.gameObject.SetActive(true);
-            item.OnSpawned(p1);
+            collectable.gameObject.SetActive(true);
+            collectable.OnSpawned(ownerTile);
         }
     }
 
@@ -158,10 +158,10 @@ namespace Zenject
             }
         }
 
-        protected override void Reinitialize(TParam1 p1, TParam2 p2, TParam3 p3, TValue item)
+        protected override void Reinitialize(TParam1 p1, TParam2 p2, TParam3 p3, TValue tile)
         {
-            item.gameObject.SetActive(true);
-            item.OnSpawned(p1, p2, p3);
+            tile.gameObject.SetActive(true);
+            tile.OnSpawned(p1, p2, p3);
         }
     }
 

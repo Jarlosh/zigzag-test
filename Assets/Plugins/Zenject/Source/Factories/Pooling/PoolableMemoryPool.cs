@@ -26,9 +26,9 @@ namespace Zenject
             item.OnDespawned();
         }
 
-        protected override void Reinitialize(TParam1 p1, TValue item)
+        protected override void Reinitialize(TParam1 ownerTile, TValue collectable)
         {
-            item.OnSpawned(p1);
+            collectable.OnSpawned(ownerTile);
         }
     }
 
@@ -58,9 +58,9 @@ namespace Zenject
             item.OnDespawned();
         }
 
-        protected override void Reinitialize(TParam1 p1, TParam2 p2, TParam3 p3, TValue item)
+        protected override void Reinitialize(TParam1 p1, TParam2 p2, TParam3 p3, TValue tile)
         {
-            item.OnSpawned(p1, p2, p3);
+            tile.OnSpawned(p1, p2, p3);
         }
     }
 
