@@ -60,22 +60,10 @@ namespace Scripts
         private void Update()
         {
             if (!IsMoving)
-            {
-                CheckForStart();
                 return;
-            }
 
             CheckInput();
             Move();
-        }
-
-        private void CheckForStart()
-        {
-            if (!Input.GetKeyDown(KeyCode.Space))
-                return;
-            if (GameState.Instance.IsFinished)
-                GameManager.Instance.Restart();
-            else GameManager.Instance.StartGame();
         }
 
         private void CheckInput()
